@@ -81,12 +81,27 @@ class ModuleGlobalArticlelist extends \Module
 					array_push($tagids, $objIds->tid);
 				}
 			}
-		}
+		}else{
+			$limit = null;
+			$offset = 0;
+
+			$objIds = $this->Database->prepare("SELECT tid FROM tl_tag WHERE from_table = ? group by tid")
+				->execute('tl_article');
+			if ($objIds->numRows)
+			{
+				while ($objIds->next())
+				{
+					array_push($tagids, $objIds->tid);
+				}
+			}
+
+        }
+
 		while ($objArticles->next())
 		{
 			$cssID = StringUtil::deserialize($objArticles->cssID, true);
 
-			$objArticle = $this->Database->prepare("SELECT a.id AS aId, a.alias AS aAlias, a.title AS title, p.id AS id, p.alias AS alias, a.teaser FROM tl_article a, tl_page p WHERE a.pid=p.id AND (a.id=? OR a.alias=?)")
+			$objArticle = $this->Database->prepare("SELECT a.teaser AS teaser, a.addImage AS addImage, a.singleSRC AS imgSrc, a.id AS aId, a.alias AS aAlias, a.title AS title, p.id AS id, p.alias AS alias, a.teaser FROM tl_article a, tl_page p WHERE a.pid=p.id AND (a.id=? OR a.alias=?)")
 										 ->limit(1)
 										 ->execute($objArticles->id, $objArticles->id);
 
@@ -96,26 +111,39 @@ class ModuleGlobalArticlelist extends \Module
 				{
 					if (in_array($objArticle->aId, $tagids) || (!$this->hide_on_empty && count($tagids) == 0))
 					{
-						$objTeaser = $this->Database->prepare("SELECT teaser FROM tl_article WHERE id=? OR alias=?")
-													->limit(1)
-													->execute((is_numeric($objArticle->aId) ? $objArticle->aId : 0), $objArticle->alias);
-						$teaser = '';
-						if ($objTeaser->numRows)
-						{
-							$teaser = $objTeaser->teaser;
-						}
-						if ($this->linktoarticles)
-						{ // link to articles
-							$articles[] = array('content' => '{{article::' . $objArticle->aId . '}}', 'url' => '{{article_url::' . $objArticle->aId . '}}', 'tags' => '{{tags_article::' . $objArticle->aId . '}}', 'data' => $objArticle->row(), 'html' => $this->getArticle($objArticle->aId, false, true), 'teaser' => $teaser);
-						}
-						else
-						{ // link to pages
-							$articles[] = array('content' => '{{link::' . $objArticle->id . '}}', 'url' => '{{link_url::' . $objArticle->id . '}}', 'tags' => '{{tags_article::' . $objArticle->aId . '}}', 'data' => $objArticle->row(), 'html' => $this->getArticle($objArticle->aId, false, true), 'teaser' => $teaser);
+
+                        $teaser = !empty($objArticle->teaser) ? $objArticle->teaser : '';
+
+                        if ($this->linktoarticles) { // link to articles
+                            $articles[] = array(
+                                'addImage' => !empty($objArticle->addImage),
+                                'image' =>  '<img src="'.\FilesModel::findByUuid($objArticle->imgSrc)->path .'" width="325" height="244">',
+                                'content' => '{{article::' . $objArticle->aId . '}}',
+                                'url' => '{{article_url::'. $objArticle->aId . '}}',
+                                'tags' => '{{tags_article::'. $objArticle->aId. '}}',
+                                'data' => $objArticle->row(),
+                                'html' => $this->getArticle($objArticle->aId, false, true),
+                                'teaser' => $teaser
+                            );
+						} else { // link to pages
+                            $articles[] = array(
+                                'addImage' => !empty($objArticle->addImage),
+                                'image' =>  '<img src="'.\FilesModel::findByUuid($objArticle->imgSrc)->path .'" width="325" height="244">',
+                                'content' => '{{link::' . $objArticle->id . '}}',
+                                'url'     => '{{link_url::' . $objArticle->id . '}}',
+                                'tags'    => '{{tags_article::' . $objArticle->aId . '}}',
+                                'data'    => $objArticle->row(),
+                                'html'    => $this->getArticle($objArticle->aId, false, true),
+                                'teaser'  => $teaser
+                            );
 						}
 					}
 				}
 			}
 		}
+		
+
+
 		$headlinetags = array();
 		if (strlen(\Input::get('tag')))
 		{
