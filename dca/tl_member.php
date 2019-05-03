@@ -1,5 +1,7 @@
 <?php
 
+use Contao\StringUtil;
+
 /**
  * @copyright  Helmut Schottmüller 2008-2013
  * @author     Helmut Schottmüller <https://github.com/hschottm/tags_members>
@@ -48,7 +50,7 @@ class tl_member_tags extends tl_member
 /**
  * Change tl_member palettes
  */
-$disabledObjects = deserialize($GLOBALS['TL_CONFIG']['disabledTagObjects'], true);
+$disabledObjects = StringUtil::deserialize($GLOBALS['TL_CONFIG']['disabledTagObjects'], true);
 if (!in_array('tl_member', $disabledObjects))
 {
 	$GLOBALS['TL_DCA']['tl_member']['config']['ondelete_callback'][] = array('tl_member_tags', 'deleteMember');

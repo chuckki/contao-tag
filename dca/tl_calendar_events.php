@@ -8,6 +8,8 @@
  * @license LGPL-3.0+
  */
 
+use Contao\StringUtil;
+
 if (@class_exists("tl_calendar_events"))
 {
 
@@ -59,7 +61,7 @@ class tl_calendar_events_tags extends tl_calendar_events
 /**
  * Change tl_news palettes
  */
-$disabledObjects = deserialize($GLOBALS['TL_CONFIG']['disabledTagObjects'], true);
+$disabledObjects = StringUtil::deserialize($GLOBALS['TL_CONFIG']['disabledTagObjects'], true);
 if (!in_array('tl_calendar_events', $disabledObjects))
 {
 	$GLOBALS['TL_DCA']['tl_calendar_events']['config']['ondelete_callback'][] = array('tl_calendar_events_tags', 'deleteEvents');

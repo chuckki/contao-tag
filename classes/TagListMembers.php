@@ -112,7 +112,7 @@ class TagListMembers extends TagList
 	 */
 	protected function isMemberOf($taggroups)
 	{
-		$groups = deserialize($taggroups);
+		$groups = StringUtil::deserialize($taggroups);
 
 		// No groups assigned
 		if (!is_array($groups) || count($groups) < 1)

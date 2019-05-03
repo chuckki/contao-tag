@@ -8,6 +8,8 @@
  * @license LGPL-3.0+
  */
 
+use Contao\StringUtil;
+
 if (@class_exists("tl_news"))
 {
 
@@ -60,7 +62,7 @@ class tl_news_tags extends tl_news
 /**
  * Change tl_news palettes
  */
-$disabledObjects = deserialize($GLOBALS['TL_CONFIG']['disabledTagObjects'], true);
+$disabledObjects = StringUtil::deserialize($GLOBALS['TL_CONFIG']['disabledTagObjects'], true);
 if (!in_array('tl_news', $disabledObjects))
 {
 	$GLOBALS['TL_DCA']['tl_news']['config']['ondelete_callback'][] = array('tl_news_tags', 'deleteNews');

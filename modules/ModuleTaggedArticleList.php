@@ -131,7 +131,7 @@ class ModuleTaggedArticleList extends \ModuleGlobalArticlelist
 				}
 				*/
 
-				$objArticles->cssID = deserialize($objArticles->cssID, true);
+				$objArticles->cssID = StringUtil::deserialize($objArticles->cssID, true);
 				// ??? $alias = strlen($objArticles->alias) ? $objArticles->alias : $objArticles->title;
 				$objArticles->startDate = (intval($objArticles->start) > 0) ? $this->parseDate($GLOBALS['TL_CONFIG']['datimFormat'], intval($objArticles->start)) : '';
 				$objArticles->teaser = $this->replaceInsertTags($objArticles->teaser);
@@ -185,7 +185,7 @@ class ModuleTaggedArticleList extends \ModuleGlobalArticlelist
 
 		$time = time();
 
-		if (strlen($this->tag_articles)) $arrArticles = deserialize($this->tag_articles, TRUE);
+		if (strlen($this->tag_articles)) $arrArticles = StringUtil::deserialize($this->tag_articles, TRUE);
 		array_push($this->arrPages, $arrArticles[0]);
 		$this->getRelevantPages($arrArticles[0]);
 		$this->getArticlesForPages();

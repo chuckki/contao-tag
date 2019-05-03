@@ -391,7 +391,7 @@ class TagList extends \System
 					continue;
 				}
 
-				$cssID = deserialize($objArticles->cssID, true);
+				$cssID = StringUtil::deserialize($objArticles->cssID, true);
 				$alias = strlen($objArticles->alias) ? $objArticles->alias : $objArticles->title;
 
 				array_push($this->arrArticles, $objArticles->id);

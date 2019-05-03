@@ -40,7 +40,7 @@ class ModuleTagCloudEvents extends \ModuleTagCloud
 		$taglist->addNamedClass = $this->tag_named_class;
 		if (strlen($this->tag_maxtags)) $taglist->maxtags = $this->tag_maxtags;
 		if (strlen($this->tag_buckets) && $this->tag_buckets > 0) $taglist->buckets = $this->tag_buckets;
-		if (strlen($this->tag_calendars)) $taglist->calendars = deserialize($this->tag_calendars, TRUE);
+		if (strlen($this->tag_calendars)) $taglist->calendars = StringUtil::deserialize($this->tag_calendars, TRUE);
 		$this->arrTags = $taglist->getTagList();
 		if (strlen($this->tag_topten_number) && $this->tag_topten_number > 0) $taglist->topnumber = $this->tag_topten_number;
 		if ($this->tag_topten) $this->arrTopTenTags = $taglist->getTopTenTagList();

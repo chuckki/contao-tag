@@ -32,7 +32,7 @@ class ModuleTagCloud extends \Module
 	{
 		if (\Input::post('toggleTagCloud') == 1)
 		{
-			$ts = deserialize(\Input::cookie('tagcloud_states'), true);
+			$ts = StringUtil::deserialize(\Input::cookie('tagcloud_states'), true);
 			$ts[\Input::post('cloudPageID')][\Input::post('cloudID')] = \Input::post('display');
 			$this->setCookie('tagcloud_states', serialize($ts), (time() + 60*60*24*30), $GLOBALS['TL_CONFIG']['websitePath']);
 		}
@@ -58,11 +58,11 @@ class ModuleTagCloud extends \Module
 		$taglist->addNamedClass = $this->tag_named_class;
 		if (strlen($this->tag_tagtable)) $taglist->tagtable = $this->tag_tagtable;
 		if (strlen($this->tag_tagfield)) $taglist->tagfield = $this->tag_tagfield;
-		if (strlen($this->tag_sourcetables)) $taglist->fortable = deserialize($this->tag_sourcetables, TRUE);
+		if (strlen($this->tag_sourcetables)) $taglist->fortable = StringUtil::deserialize($this->tag_sourcetables, TRUE);
 		if (strlen($this->tag_topten_number) && $this->tag_topten_number > 0) $taglist->topnumber = $this->tag_topten_number;
 		if (strlen($this->tag_maxtags)) $taglist->maxtags = $this->tag_maxtags;
 		if (strlen($this->tag_buckets) && $this->tag_buckets > 0) $taglist->buckets = $this->tag_buckets;
-		if (strlen($this->pagesource)) $taglist->pagesource = deserialize($this->pagesource, TRUE);
+		if (strlen($this->pagesource)) $taglist->pagesource = StringUtil::deserialize($this->pagesource, TRUE);
 		$this->arrTags = $taglist->getTagList();
 		if ($this->tag_topten) $this->arrTopTenTags = $taglist->getTopTenTagList();
 		if (strlen(\Input::get('tag')) && $this->tag_related)
@@ -219,7 +219,7 @@ class ModuleTagCloud extends \Module
 					}
 					$this->arrTopTenTags[$idx]['tag_url'] = $strUrl;
 				}
-				$ts = deserialize(\Input::cookie('tagcloud_states'), true);
+				$ts = StringUtil::deserialize(\Input::cookie('tagcloud_states'), true);
 //				$ts = $this->Session->get('tagcloud_states');
 				$this->Template->expandedTopTen = (strlen($ts[$this->id]['topten'])) ? ((strcmp($ts[$this->id]['topten'], 'none') == 0) ? 0 : 1) : $this->tag_topten_expanded;
 				$this->Template->expandedAll = (strlen($ts[$this->id]['alltags'])) ? ((strcmp($ts[$this->id]['alltags'], 'none') == 0) ? 0 : 1) : $this->tag_all_expanded;

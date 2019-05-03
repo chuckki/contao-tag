@@ -36,7 +36,7 @@ class ModuleTagListByCategory extends \Module
 
 			return $objTemplate->parse();
 		}
-		if (strlen($this->tag_sourcetables)) $this->sourcetables = deserialize($this->tag_sourcetables, TRUE);
+		if (strlen($this->tag_sourcetables)) $this->sourcetables = StringUtil::deserialize($this->tag_sourcetables, TRUE);
 
 		$this->getRelevantPages($this->pagesource);
 //		$this->getTags();

@@ -8,13 +8,15 @@
  * @license LGPL-3.0+
  */
 
+use Contao\StringUtil;
+
 if (@class_exists("tl_faq"))
 {
 	/**
 	 * Change tl_faq default palette
 	 */
 
-	$disabledObjects = deserialize($GLOBALS['TL_CONFIG']['disabledTagObjects'], true);
+	$disabledObjects = StringUtil::deserialize($GLOBALS['TL_CONFIG']['disabledTagObjects'], true);
 	if (!in_array('tl_article', $disabledObjects))
 	{
 		$GLOBALS['TL_DCA']['tl_faq']['palettes']['default'] = str_replace("author", "author,tags", $GLOBALS['TL_DCA']['tl_faq']['palettes']['default']);

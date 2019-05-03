@@ -1,5 +1,7 @@
 <?php
 
+use Contao\StringUtil;
+
 /**
  * Contao Open Source CMS - tags extension
  *
@@ -73,7 +75,7 @@ class tl_article_tags extends tl_article
  * Change tl_article default palette
  */
 
-$disabledObjects = deserialize($GLOBALS['TL_CONFIG']['disabledTagObjects'], true);
+$disabledObjects = StringUtil::deserialize($GLOBALS['TL_CONFIG']['disabledTagObjects'], true);
 if (!in_array('tl_article', $disabledObjects))
 {
 	$GLOBALS['TL_DCA']['tl_article']['palettes']['default'] = str_replace("keywords", "keywords;{tags_legend},tags,tags_showtags", $GLOBALS['TL_DCA']['tl_article']['palettes']['default']);

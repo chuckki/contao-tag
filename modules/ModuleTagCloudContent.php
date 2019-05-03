@@ -42,7 +42,7 @@ class ModuleTagCloudContent extends \ModuleTagCloud
 		if (strlen($this->tag_maxtags)) $taglist->maxtags = $this->tag_maxtags;
 		if (strlen($this->tag_topten_number) && $this->tag_topten_number > 0) $taglist->topnumber = $this->tag_topten_number;
 		if (strlen($this->tag_buckets) && $this->tag_buckets > 0) $taglist->buckets = $this->tag_buckets;
-		if (strlen($this->tag_content_pages)) $taglist->content_pages = deserialize($this->tag_content_pages, TRUE);
+		if (strlen($this->tag_content_pages)) $taglist->content_pages = StringUtil::deserialize($this->tag_content_pages, TRUE);
 		$this->arrTags = $taglist->getTagList();
 		if ($this->tag_topten) $this->arrTopTenTags = $taglist->getTopTenTagList();
 		if (strlen($this->Input->get('tag')) && $this->tag_related)

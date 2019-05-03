@@ -8,7 +8,9 @@
  * @license LGPL-3.0+
  */
 
-$disabledObjects = deserialize($GLOBALS['TL_CONFIG']['disabledTagObjects'], true);
+use Contao\StringUtil;
+
+$disabledObjects = StringUtil::deserialize($GLOBALS['TL_CONFIG']['disabledTagObjects'], true);
 if (!in_array('tl_content', $disabledObjects))
 {
 	foreach ($GLOBALS['TL_DCA']['tl_content']['palettes'] as $key => $palette)

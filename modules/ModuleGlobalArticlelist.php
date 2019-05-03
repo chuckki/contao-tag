@@ -82,7 +82,7 @@ class ModuleGlobalArticlelist extends \Module
 		}
 		while ($objArticles->next())
 		{
-			$cssID = deserialize($objArticles->cssID, true);
+			$cssID = StringUtil::deserialize($objArticles->cssID, true);
 
 			$objArticle = $this->Database->prepare("SELECT a.id AS aId, a.alias AS aAlias, a.title AS title, p.id AS id, p.alias AS alias, a.teaser FROM tl_article a, tl_page p WHERE a.pid=p.id AND (a.id=? OR a.alias=?)")
 										 ->limit(1)

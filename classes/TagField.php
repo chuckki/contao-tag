@@ -144,7 +144,7 @@ class TagField extends \TextField
 	 */
 	public function validate()
 	{
-		$varInput = $this->validator(deserialize($this->getPost($this->strName)));
+		$varInput = $this->validator(StringUtil::deserialize($this->getPost($this->strName)));
 		$this->saveTags(implode(",", array_filter(trimsplit(",", $varInput), 'strlen')));
 		parent::validate();
 	}
