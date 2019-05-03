@@ -49,8 +49,8 @@ class ModuleTagCloudArticles extends \ModuleTagCloud
 		if ($this->tag_topten) $this->arrTopTenTags = $taglist->getTopTenTagList();
 		if (strlen($this->Input->get('tag')) && $this->tag_related)
 		{
-			$relatedlist = (strlen($this->Input->get('related'))) ? preg_split("/,/", $this->Input->get('related')) : array();
-			$this->arrRelated = $taglist->getRelatedTagList(array_merge(array($this->Input->get('tag')), $relatedlist));
+			$relatedlist = (strlen(Input::get('related'))) ? preg_split("/,/", Input::get('related')) : array();
+			$this->arrRelated = $taglist->getRelatedTagList(array_merge(array(Input::get('tag')), $relatedlist));
 		}
 		if (count($this->arrTags) < 1)
 		{
