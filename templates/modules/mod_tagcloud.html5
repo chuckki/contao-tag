@@ -68,12 +68,12 @@
           $txts[] = $tag;
         }
     }
+    arsort($txts);
+    arsort($nums);
 
     ?>
 
-<h3>
-Projekte nach Stiftungszweck
-</h3>
+<h2>Projekte nach Stiftungszweck</h2>
 
 
 <ul class="cloud"<?php echo (($this->topten && !$this->expandedAll) ? ' style="display: none;"' : ''); ?>>
@@ -88,9 +88,7 @@ Projekte nach Stiftungszweck
 <?php endforeach; ?>
 </ul>
 
-<h3>
-Projekte nach Jahren
-</h3>
+<h2>Projekte nach Jahren</h2>
 
 
 <ul class="cloud"<?php echo (($this->topten && !$this->expandedAll) ? ' style="display: none;"' : ''); ?>>

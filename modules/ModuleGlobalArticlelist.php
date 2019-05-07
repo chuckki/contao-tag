@@ -67,6 +67,7 @@ class ModuleGlobalArticlelist extends \Module
 		$tagids = array();
 		if (strlen(\Input::get('tag')))
 		{
+            $this->Template->fullList = false;
 		    $currentTag =  urldecode(\Input::get('tag'));
 
 			$limit = null;
@@ -82,6 +83,7 @@ class ModuleGlobalArticlelist extends \Module
 				}
 			}
 		}else{
+            $this->Template->fullList = true;
 			$limit = null;
 			$offset = 0;
 
