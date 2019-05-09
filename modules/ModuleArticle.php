@@ -25,7 +25,7 @@ class ModuleArticle extends \Contao\ModuleArticle
 	{
 		\Contao\ModuleArticle::compile();
 		$this->Template->show_tags = $this->tags_showtags;
-		if ($this->tags_showtags)
+		if ($this->tags_showtags or 1)
 		{
 			$this->Template->tags = $this->getTagsForArticle($this->tags_max_tags, $this->tags_relevance, $this->tags_jumpto);
 		}

@@ -123,6 +123,7 @@ class ModuleGlobalArticlelist extends \Module
                                 'content' => '{{article::' . $objArticle->aId . '}}',
                                 'url' => '{{article_url::'. $objArticle->aId . '}}',
                                 'tags' => '{{tags_article::'. $objArticle->aId. '}}',
+                                'pageUrl' =>'{{link_url::'. $objArticle->id. '}}',
                                 'data' => $objArticle->row(),
                                 'html' => $this->getArticle($objArticle->aId, false, true),
                                 'teaser' => $teaser

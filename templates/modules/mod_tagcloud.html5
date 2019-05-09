@@ -84,7 +84,7 @@
 
 
     ?>
-
+<div class="txt-tag cat-tag">
 <h2 <?php echo ($active === 'txt')? 'class="active"': '';?> >Projekte nach Stiftungszweck</h2>
 
 
@@ -99,6 +99,8 @@
       <?php echo $tag['tag_name'];// . ' (' . $tag['tag_count'] . ')'; ?><?php if (strlen($this->jumpTo)): ?></a><?php endif; ?></li>
 <?php endforeach; ?>
 </ul>
+</div>
+    <div class="txt-tag cat-tag">
 
 <h2 <?php echo ($active === 'num')? 'class="active"': '';?>>Projekte nach Jahren</h2>
 
@@ -114,6 +116,7 @@
       <?php echo $tag['tag_name'];// . ' (' . $tag['tag_count'] . ')'; ?><?php if (strlen($this->jumpTo)): ?></a><?php endif; ?></li>
 <?php endforeach; ?>
 </ul>
+    </div>
 
 
 </div>
