@@ -18,9 +18,9 @@ $GLOBALS['BE_FFL']['tag'] = 'TagField';
  */
 array_insert($GLOBALS['FE_MOD']['tags'], 1, array
 (
-	'tagcloud'            => 'ModuleTagCloud',
+  'tagcloud'            => 'ModuleTagCloud',
   'tagcloudarticles'    => 'ModuleTagCloudArticles',
-	'taggedArticleList'   => 'ModuleTaggedArticleList',
+  'taggedArticleList'   => 'ModuleTaggedArticleList',
   'tagscope'            => 'ModuleTagScope',
   'tagcontentlist'      => 'ModuleTagContentList',
   'taglistbycategory'   => 'ModuleTagListByCategory',

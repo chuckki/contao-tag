@@ -123,7 +123,8 @@ class ModuleTagCloud extends \Module
 				}
 			}
 			$this->arrTags[$idx]['tag_url'] = $strUrl;
-			if ($tag['tag_name'] == \Input::get('tag'))
+
+			if ($tag['tag_name'] ==  urldecode(\Input::get('tag')))
 			{
 				$this->arrTags[$idx]['tag_class'] .= ' active';
 			}

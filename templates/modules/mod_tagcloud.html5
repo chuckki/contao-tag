@@ -59,21 +59,33 @@
 <?php endif; ?>
 
     <?php
+
+    //dump($this->tags);
+
     $nums = array();
     $txts = array();
+    $active = '';
     foreach ($this->tags as $tag) {
         if (is_numeric($tag['tag_name'])){
           $nums[] = $tag;
+          if(strpos($tag['tag_class'],'active') !== false){
+             $active = 'num';
+          }
         }else{
           $txts[] = $tag;
+            if(strpos($tag['tag_class'],'active') !== false){
+                $active = 'txt';
+            }
         }
     }
     arsort($txts);
     arsort($nums);
 
+
+
     ?>
 
-<h2>Projekte nach Stiftungszweck</h2>
+<h2 <?php echo ($active === 'txt')? 'class="active"': '';?> >Projekte nach Stiftungszweck</h2>
 
 
 <ul class="cloud"<?php echo (($this->topten && !$this->expandedAll) ? ' style="display: none;"' : ''); ?>>
@@ -84,11 +96,11 @@
         <a href="<?php echo $tag['tag_url']; ?>" title="<?php echo $tag['tag_name'] . ' (' . $tag['tag_count'] . ')'; ?>">
       <?php endif; ?>
 
-      <?php echo $tag['tag_name'] . ' (' . $tag['tag_count'] . ')'; ?><?php if (strlen($this->jumpTo)): ?></a><?php endif; ?></li>
+      <?php echo $tag['tag_name'];// . ' (' . $tag['tag_count'] . ')'; ?><?php if (strlen($this->jumpTo)): ?></a><?php endif; ?></li>
 <?php endforeach; ?>
 </ul>
 
-<h2>Projekte nach Jahren</h2>
+<h2 <?php echo ($active === 'num')? 'class="active"': '';?>>Projekte nach Jahren</h2>
 
 
 <ul class="cloud"<?php echo (($this->topten && !$this->expandedAll) ? ' style="display: none;"' : ''); ?>>
@@ -99,7 +111,7 @@
         <a href="<?php echo $tag['tag_url']; ?>" title="<?php echo $tag['tag_name'] . ' (' . $tag['tag_count'] . ')'; ?>">
       <?php endif; ?>
 
-      <?php echo $tag['tag_name'] . ' (' . $tag['tag_count'] . ')'; ?><?php if (strlen($this->jumpTo)): ?></a><?php endif; ?></li>
+      <?php echo $tag['tag_name'];// . ' (' . $tag['tag_count'] . ')'; ?><?php if (strlen($this->jumpTo)): ?></a><?php endif; ?></li>
 <?php endforeach; ?>
 </ul>
 
