@@ -100,7 +100,7 @@
 <?php endforeach; ?>
 </ul>
 </div>
-    <div class="txt-tag cat-tag">
+    <div class="num-tag cat-tag">
 
 <h2 <?php echo ($active === 'num')? 'class="active"': '';?>>Projekte nach Jahren</h2>
 
