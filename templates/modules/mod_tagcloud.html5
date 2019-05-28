@@ -1,122 +1,168 @@
 <!-- indexer::stop -->
-<div class="<?= $this->class ?> block tagcloud"<?= $this->cssID ?><?php if ($this->style): ?> style="<?php echo $this->style; ?>"<?php endif; ?>>
+<div
+    class="<?= $this->class ?> block tagcloud"<?= $this->cssID ?><?php if ($this->style): ?> style="<?php echo $this->style; ?>"<?php endif; ?>>
 
     <?php if ($this->headline): ?>
-    <<?php echo $this->hl; ?>><?php echo $this->headline; ?></<?php echo $this->hl; ?>>
+  <<?php echo $this->hl; ?>><?php echo $this->headline; ?></<?php echo $this->hl; ?>>
 <?php endif; ?>
 
 
 <?php if (strlen($this->empty_url) && $this->selectedtags > 0): ?>
-<div class="reset"><a href="<?php echo $this->empty_url; ?>"><?php echo $this->lngEmpty; ?></a></div>
+  <div class="reset"><a href="<?php echo $this->empty_url; ?>"><?php echo $this->lngEmpty; ?></a></div>
 <?php endif; ?>
 <?php if (count($this->relatedtags)): ?>
-<h3><span id="related" class="toggle-button <?php echo (($this->expandedRelated) ? "" : "yes"); ?> off" onclick="TagCloudRequest.toggleTagCloud($(this), '<?php echo $this->pageID; ?>')"><?php echo $this->strRelatedTags; ?></span></h3>
+  <h3><span id="related" class="toggle-button <?php echo(($this->expandedRelated) ? "" : "yes"); ?> off"
+            onclick="TagCloudRequest.toggleTagCloud($(this), '<?php echo $this->pageID; ?>')"><?php echo $this->strRelatedTags; ?></span>
+  </h3>
 
-  <ul class="related"<?php echo (($this->topten && !$this->expandedRelated) ? ' style="display: none;"' : ''); ?>>
-<?php foreach ($this->relatedtags as $tag): ?>
+  <ul class="related"<?php echo(($this->topten && !$this->expandedRelated) ? ' style="display: none;"' : ''); ?>>
+      <?php foreach ($this->relatedtags as $tag): ?>
 
 
-
-	<li>
-    <?php if (strlen($this->jumpTo)): ?>
-      <a href="<?php echo $tag['tag_url']; ?>" title="<?php echo $tag['tag_name'] . ' (' . $tag['tag_count'] . ')'; ?>">
+        <li>
+            <?php if (strlen($this->jumpTo)): ?>
+          <a href="<?php echo $tag['tag_url']; ?>"
+             title="<?php echo $tag['tag_name'] . ' (' . $tag['tag_count'] . ')'; ?>">
         <span class="reltext">
     <?php endif; ?>
 
       +<?php echo $tag['tag_name']; ?>
 
-    <?php if (strlen($this->jumpTo)): ?>
+            <?php if (strlen($this->jumpTo)): ?>
         </span>
-        <span class="relcount"><?php echo $tag['tag_count']; ?></span>
-      </a>
-    <?php endif; ?>
-  </li>
+            <span class="relcount"><?php echo $tag['tag_count']; ?></span>
+          </a>
+        <?php endif; ?>
+        </li>
 
 
-
-<?php endforeach; ?>
+      <?php endforeach; ?>
 
   </ul>
 
 
-<div style="clear: both;"></div>
+  <div style="clear: both;"></div>
 <?php endif; ?>
 
 
 <?php if ($this->topten): ?>
-<h3><span id="topten" class="toggle-button <?php echo (($this->expandedTopTen) ? "" : "yes"); ?> off" onclick="TagCloudRequest.toggleTagCloud($(this), '<?php echo $this->pageID; ?>')"><?php echo $this->strTopTenTags; ?></span></h3>
-<ul class="cloud"<?php echo ((!$this->expandedTopTen) ? ' style="display: none;"' : ''); ?>>
-<?php foreach ($this->toptentags as $tag): ?>
-	<li class="<?php echo $tag['tag_class']; ?>"><?php if (strlen($this->jumpTo)): ?><a href="<?php echo $tag['tag_url']; ?>" title="<?php echo $tag['tag_name'] . ' (' . $tag['tag_count'] . ')'; ?>"><?php endif; ?><?php echo $tag['tag_name']; ?><?php if (strlen($this->jumpTo)): ?></a><?php endif; ?></li>
-<?php endforeach; ?>
-</ul>
+  <h3><span id="topten" class="toggle-button <?php echo(($this->expandedTopTen) ? "" : "yes"); ?> off"
+            onclick="TagCloudRequest.toggleTagCloud($(this), '<?php echo $this->pageID; ?>')"><?php echo $this->strTopTenTags; ?></span>
+  </h3>
+  <ul class="cloud"<?php echo((!$this->expandedTopTen) ? ' style="display: none;"' : ''); ?>>
+      <?php foreach ($this->toptentags as $tag): ?>
+        <li class="<?php echo $tag['tag_class']; ?>"><?php if (strlen($this->jumpTo)): ?><a
+              href="<?php echo $tag['tag_url']; ?>" title="<?php echo $tag['tag_name'] . ' (' . $tag['tag_count']
+                                                                      . ')'; ?>"><?php endif; ?><?php echo $tag['tag_name']; ?><?php if (strlen(
+                    $this->jumpTo
+                )): ?></a><?php endif; ?></li>
+      <?php endforeach; ?>
+  </ul>
 <?php endif; ?>
 
 <?php if (($this->topten) || (count($this->relatedtags))): ?>
-<h3><span id="alltags" class="toggle-button <?php echo (($this->expandedAll) ? "" : "yes"); ?> off" onclick="TagCloudRequest.toggleTagCloud($(this), '<?php echo $this->pageID; ?>')">
+  <h3><span id="alltags" class="toggle-button <?php echo(($this->expandedAll) ? "" : "yes"); ?> off"
+            onclick="TagCloudRequest.toggleTagCloud($(this), '<?php echo $this->pageID; ?>')">
         <?php echo $this->strAllTags; ?> (<?php echo $this->tagcount; ?>)da</span>hier
-</h3>
+  </h3>
 <?php endif; ?>
 
-    <?php
-
-    //dump($this->tags);
-
-    $nums = array();
-    $txts = array();
-    $active = '';
-    foreach ($this->tags as $tag) {
-        if (is_numeric($tag['tag_name'])){
-          $nums[] = $tag;
-          if(strpos($tag['tag_class'],'active') !== false){
-             $active = 'num';
+<?php
+//dump($this->tags);
+$allNumericTags = array();
+$txts           = array();
+$active         = '';
+$counter = 0;
+foreach ($this->tags as $tag) {
+    if (is_numeric($tag['tag_name'])) {
+        $allNumericTags[] = $tag;
+        if (strpos($tag['tag_class'], 'active') !== false) {
+          if($counter++ < 9){
+            $active = 'num';
+          }else{
+            $active = 'archiv';
           }
-        }else{
-          $txts[] = $tag;
-            if(strpos($tag['tag_class'],'active') !== false){
-                $active = 'txt';
-            }
+        }
+    } else {
+        $txts[] = $tag;
+        if (strpos($tag['tag_class'], 'active') !== false) {
+            $active = 'txt';
         }
     }
-    arsort($txts);
-    arsort($nums);
-
-
-
-    ?>
+}
+arsort($txts);
+arsort($allNumericTags);
+$nums = array_slice($allNumericTags, 0, 9);
+$archiv = array_slice($allNumericTags, 9);
+/*
+echo "<pre>";
+print_r(count($nums));
+print_r($nums);
+die;
+*/
+?>
 <div class="txt-tag cat-tag">
-<h2 <?php echo ($active === 'txt')? 'class="active"': '';?> >Projekte nach Stiftungszweck</h2>
+  <h2 <?php echo ($active === 'txt') ? 'class="active"' : ''; ?> >Projekte nach Stiftungszweck</h2>
 
 
-<ul class="cloud"<?php echo (($this->topten && !$this->expandedAll) ? ' style="display: none;"' : ''); ?>>
+  <ul class="cloud"<?php echo(($this->topten && !$this->expandedAll) ? ' style="display: none;"' : ''); ?>>
 
-<?php foreach ($txts as $tag): ?>
-	<li class="<?php echo $tag['tag_class']; ?>">
-      <?php if (strlen($this->jumpTo)): ?>
-        <a href="<?php echo $tag['tag_url']; ?>" title="<?php echo $tag['tag_name'] . ' (' . $tag['tag_count'] . ')'; ?>">
-      <?php endif; ?>
+      <?php foreach ($txts as $tag): ?>
+        <li class="<?php echo $tag['tag_class']; ?>">
+            <?php if (strlen($this->jumpTo)): ?>
+          <a href="<?php echo $tag['tag_url']; ?>"
+             title="<?php echo $tag['tag_name'] . ' (' . $tag['tag_count'] . ')'; ?>">
+              <?php endif; ?>
 
-      <?php echo $tag['tag_name'];// . ' (' . $tag['tag_count'] . ')'; ?><?php if (strlen($this->jumpTo)): ?></a><?php endif; ?></li>
-<?php endforeach; ?>
-</ul>
+              <?php echo $tag['tag_name'];// . ' (' . $tag['tag_count'] . ')'; ?><?php if (strlen(
+                  $this->jumpTo
+              )): ?></a><?php endif; ?></li>
+      <?php endforeach; ?>
+  </ul>
 </div>
-    <div class="num-tag cat-tag">
 
-<h2 <?php echo ($active === 'num')? 'class="active"': '';?>>Projekte nach Jahren</h2>
+<div class="num-tag cat-tag">
+
+  <h2 <?php echo ($active === 'num') ? 'class="active"' : ''; ?>>Projekte nach Jahren</h2>
+
+  <ul class="cloud"<?php echo(($this->topten && !$this->expandedAll) ? ' style="display: none;"' : ''); ?>>
+
+      <?php foreach ($nums as $tag): ?>
+        <li class="<?php echo $tag['tag_class']; ?>">
+            <?php if (strlen($this->jumpTo)): ?>
+          <a href="<?php echo $tag['tag_url']; ?>"
+             title="<?php echo $tag['tag_name'] . ' (' . $tag['tag_count'] . ')'; ?>">
+              <?php endif; ?>
+
+              <?php echo $tag['tag_name'];// . ' (' . $tag['tag_count'] . ')'; ?><?php if (strlen(
+                  $this->jumpTo
+              )): ?></a><?php endif; ?></li>
+      <?php endforeach; ?>
+  </ul>
+</div>
 
 
-<ul class="cloud"<?php echo (($this->topten && !$this->expandedAll) ? ' style="display: none;"' : ''); ?>>
+<div class="archiv-tag cat-tag">
 
-<?php foreach ($nums as $tag): ?>
-	<li class="<?php echo $tag['tag_class']; ?>">
-      <?php if (strlen($this->jumpTo)): ?>
-        <a href="<?php echo $tag['tag_url']; ?>" title="<?php echo $tag['tag_name'] . ' (' . $tag['tag_count'] . ')'; ?>">
-      <?php endif; ?>
+  <h2 <?php echo ($active === 'archiv') ? 'class="active"' : ''; ?>>Archiv</h2>
 
-      <?php echo $tag['tag_name'];// . ' (' . $tag['tag_count'] . ')'; ?><?php if (strlen($this->jumpTo)): ?></a><?php endif; ?></li>
-<?php endforeach; ?>
-</ul>
-    </div>
+  <ul class="cloud"<?php echo(($this->topten && !$this->expandedAll) ? ' style="display: none;"' : ''); ?>>
+
+      <?php foreach ($archiv as $tag): ?>
+        <li class="<?php echo $tag['tag_class']; ?>">
+            <?php if (strlen($this->jumpTo)): ?>
+          <a href="<?php echo $tag['tag_url']; ?>"
+             title="<?php echo $tag['tag_name'] . ' (' . $tag['tag_count'] . ')'; ?>">
+              <?php endif; ?>
+
+              <?php echo $tag['tag_name'];// . ' (' . $tag['tag_count'] . ')'; ?><?php if (strlen(
+                  $this->jumpTo
+              )): ?></a><?php endif; ?></li>
+      <?php endforeach; ?>
+  </ul>
+</div>
+
+
 
 
 </div>
