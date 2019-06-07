@@ -154,6 +154,11 @@ class ModuleGlobalArticlelist extends \Module
 			$headlinetags = array_merge(array($currentTag), $relatedlist);
 		}
 		$this->Template->tags_activetags = $headlinetags;
+        $this->Template->pageCount = 1 + count($articles) / 10;
+
+        $page = \Input::get('page')?:1;
+        $this->Template->activePageCount = $page;
+        $articles = array_slice($articles,($page - 1) * 10, 10,);
 		$this->Template->articles = $articles;
 		$this->Template->empty = $GLOBALS['TL_LANG']['MSC']['emptyarticles'];
 		$this->Session->set('block', false);
